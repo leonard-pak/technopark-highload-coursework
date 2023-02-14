@@ -1,6 +1,6 @@
 # Patreon
 
-[Методические указания]()
+[Методические указания](https://github.com/init/highload/blob/main/homework_architecture.md)
 
 ## 1.1 Тема
 
