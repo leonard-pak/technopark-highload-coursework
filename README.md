@@ -277,7 +277,7 @@
     SUBSCRIPTION_CARDS ||--o{ SUBSCRIPTIONS: id
 ```
 
-### Описание
+### 3.1 Описание
 1. Таблица **USER** хранит основные данные всех пользователей сервиса.
 2. Таблица **SESSION** служит для хранение всех текущих сессий пользователей из таблицы **USER**.
 3. Таблица **PATROLS** хранит данные всех покровителей.
@@ -287,6 +287,86 @@
 7. Таблица **SUBSCRIPTIONS** организовывает связь многие ко многим между покровителями и подписками авторов. Также хранит дату окончания подписки.
 8. Таблицы **IMAGES** хранит uuid изображения, по которому его можно получить, и уровень подписки, который необходим для получения изображения. Поле **subscriptionID** может быть **NULL**, что будет значить, что изображения доступен без подписи (для аватарок, изображений с описаний и подписок и общедоступных постов).
 
+## 4. Физическая схема
+> _PG - PostgreSQL \
+> _S3 - S3 объектное хранилище \
+> _RD - Redis
+```mermaid
+  erDiagram
+    USERS_PG {
+      serial id PK
+      varchar(256) email UK
+      char(60) password
+    }
+    AUTHORS_PG {
+      serial id PK
+      integer userID FK
+      varchar(64) username
+      text about
+      uuid avatar FK
+      integer balance
+    }
+    PATROLS_PG {
+      serial id PK
+      integer userID FK
+      varchar(64) username
+    }
+    POSTS_PG {
+      serial id PK
+      integer authorID FK
+      interger subscriptionID FK
+      text content
+    }
+    SUBSCRIPTION_CARDS_PG {
+      serial id PK
+      interger authorID FK
+      smallint level
+      varchar(50) title
+      text description
+      uuid image
+      integer cost
+    }
+    SESSIONS_RD {
+      varchar(60) cookie UK
+      interger userID FK
+      date expire
+    }
+    SUBSCRIPTIONS_PG {
+      bigserial id PK
+      interger patrolID FK
+      interger subscriptionID FK
+      date expire
+    }
+    IMAGES_PG {
+      uuid label PK
+      interger subscriptionID
+    }
+
+    IMAGES_PG ||--|| IMAGES_S3: uuid
+
+    AUTHORS_PG ||--o{ POSTS_PG: id
+    AUTHORS_PG ||--|| IMAGES_PG: avatar
+    USERS_PG ||--o| AUTHORS_PG: id
+    USERS_PG ||--o| PATROLS_PG: id
+    USERS_PG ||--o{ SESSIONS_RD: id
+    AUTHORS_PG ||--o{ SUBSCRIPTION_CARDS_PG: id
+    POSTS_PG }o--|| SUBSCRIPTION_CARDS_PG: id
+    SUBSCRIPTION_CARDS_PG ||--|| IMAGES_PG: image
+    PATROLS_PG ||--o{ SUBSCRIPTIONS_PG: id
+    SUBSCRIPTION_CARDS_PG ||--o{ SUBSCRIPTIONS_PG: id
+```
+### 4.1 Индексы
+1. Индексы на все первичные ключи (по умолчанию).
+2. Индексирование поля **username** в таблице **AUTHORS**.
+3. Индексирование поля **authorID** в таблице **POSTS**.
+4. Индексирование поля **email** в таблице **USERS**.
+5. Индексирование поля **patrolID** в таблице **SUBSCRIPTIONS**.
+### 4.2 Шардирование
+1. **USERS** - шардирование по хэш функции поля **email**.
+2. **PATROLS** - шардирование по хэш функции поля **userID**.
+3. **POSTS** - шардирование по хэш функции поля **authorID**.
+### 4.3 Репликация
+Репкликация всей базв данных Postgres по схеме 1 Master - 2 Slave.
 ## Список литературы
 [^1]: [Domain Overview:
 patreon.com](https://www.semrush.com/analytics/overview/?q=patreon.com&searchType=domain)
