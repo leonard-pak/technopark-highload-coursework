@@ -213,6 +213,80 @@
 | Просмотр поста   |  1736  |    3 472    |
 | Оплата           |  2.22  |    4.44     |
 
+## 3. Логическая схема
+```mermaid
+  erDiagram
+    USERS {
+      serial id PK
+      varchar(256) email UK
+      char(60) password
+    }
+    AUTHORS {
+      serial id PK
+      integer userID FK
+      varchar(64) username
+      text about
+      uuid avatar FK
+      integer balance
+    }
+    PATROLS {
+      serial id PK
+      integer userID FK
+      varchar(64) username
+    }
+    POSTS {
+      serial id PK
+      integer authorID FK
+      interger subscriptionID FK
+      text content
+    }
+    SUBSCRIPTION_CARDS {
+      serial id PK
+      interger authorID FK
+      smallint level
+      varchar(50) title
+      text description
+      uuid image
+      integer cost
+    }
+    SESSIONS {
+      varchar(60) cookie UK
+      interger userID FK
+      date expire
+    }
+    SUBSCRIPTIONS {
+      bigserial id PK
+      interger patrolID FK
+      interger subscriptionID FK
+      date expire
+    }
+    IMAGES {
+      uuid label PK
+      interger subscriptionID
+    }
+
+    AUTHORS ||--o{ POSTS: id
+    AUTHORS ||--|| IMAGES: avatar
+    USERS ||--o| AUTHORS: id
+    USERS ||--o| PATROLS: id
+    USERS ||--o{ SESSIONS: id
+    AUTHORS ||--o{ SUBSCRIPTION_CARDS: id
+    POSTS }o--|| SUBSCRIPTION_CARDS: id
+    SUBSCRIPTION_CARDS ||--|| IMAGES: image
+    PATROLS ||--o{ SUBSCRIPTIONS: id
+    SUBSCRIPTION_CARDS ||--o{ SUBSCRIPTIONS: id
+```
+
+### Описание
+1. Таблица **USER** хранит основные данные всех пользователей сервиса.
+2. Таблица **SESSION** служит для хранение всех текущих сессий пользователей из таблицы **USER**.
+3. Таблица **PATROLS** хранит данные всех покровителей.
+4. Таблица **AUTHORS** хранит данные всех авторов.
+5. Таблица **POSTS** хранит все посты и связана с **AUTHORS** и **SUBSCRIPTION_CARDS**. Поле **subscriptionID** может быть **NULL**, что будет значить, что пост доступен без подписи.
+6. Таблица **SUBSCRIPTION_CARDS** хранит все подписки. каждая подписка принадлежит какому-то автору (**AUTHORS**).
+7. Таблица **SUBSCRIPTIONS** организовывает связь многие ко многим между покровителями и подписками авторов. Также хранит дату окончания подписки.
+8. Таблицы **IMAGES** хранит uuid изображения, по которому его можно получить, и уровень подписки, который необходим для получения изображения. Поле **subscriptionID** может быть **NULL**, что будет значить, что изображения доступен без подписи (для аватарок, изображений с описаний и подписок и общедоступных постов).
+
 ## Список литературы
 [^1]: [Domain Overview:
 patreon.com](https://www.semrush.com/analytics/overview/?q=patreon.com&searchType=domain)
