@@ -241,17 +241,20 @@
       text about
       uuid avatar FK
       integer balance
+      interger[] subscribers FK
     }
     PATROLS {
       serial id PK
       integer userID FK
       varchar(64) username
+      interger[] feed FK
     }
     POSTS {
       serial id PK
       integer authorID FK
       interger subscriptionID FK
       text content
+      date timeCreated
     }
     SUBSCRIPTION_CARDS {
       serial id PK
@@ -288,6 +291,8 @@
     SUBSCRIPTION_CARDS ||--|| IMAGES: image
     PATROLS ||--o{ SUBSCRIPTIONS: id
     SUBSCRIPTION_CARDS ||--o{ SUBSCRIPTIONS: id
+    POSTS ||--o{ PATROLS: id
+    PATROLS ||--o{ AUTHORS: id
 ```
 
 ### 3.1 Описание
@@ -318,17 +323,20 @@
       text about
       uuid avatar FK
       integer balance
+      interger[] subscribers FK
     }
     PATROLS_PG {
       serial id PK
       integer userID FK
       varchar(64) username
+      interger[] feed FK
     }
     POSTS_PG {
       serial id PK
       integer authorID FK
       interger subscriptionID FK
       text content
+      date timeCreated
     }
     SUBSCRIPTION_CARDS_PG {
       serial id PK
@@ -367,19 +375,29 @@
     SUBSCRIPTION_CARDS_PG ||--|| IMAGES_PG: image
     PATROLS_PG ||--o{ SUBSCRIPTIONS_PG: id
     SUBSCRIPTION_CARDS_PG ||--o{ SUBSCRIPTIONS_PG: id
+    POSTS_PG ||--o{ PATROLS_PG: id
+    PATROLS_PG ||--o{ AUTHORS_PG: id
 ```
+![](imgs/hl.jpg)
 ### 4.1 Индексы
 1. Индексы на все первичные ключи (по умолчанию).
-2. Индексирование поля **username** в таблице **AUTHORS**.
-3. Индексирование поля **authorID** в таблице **POSTS**.
-4. Индексирование поля **email** в таблице **USERS**.
-5. Индексирование поля **patrolID** в таблице **SUBSCRIPTIONS**.
+2. B-tree Индексирование поля **username** в таблице **AUTHORS** для более быстрого поиска по имени.
+3. B-tree Индексирование полей **authorID** и **timeCreated** в таблице **POSTS** для ускорения выборки постов в отсортированном по дате создания виде.
+4. Хэш Индексирование поля **email** в таблице **USERS** для быстрого поиска по почте при авторизации.
+5. B-tree Индексирование поля **patrolID** в таблице **SUBSCRIPTIONS** для ускорения получения подписок отдельных покровителей.
 ### 4.2 Шардирование
-1. **USERS** - шардирование по хэш функции поля **email**.
-2. **PATROLS** - шардирование по хэш функции поля **userID**.
-3. **POSTS** - шардирование по хэш функции поля **authorID**.
+1. **USERS** - шардирование по полю **email**.
+2. **PATROLS** - шардирование по полю **userID**.
 ### 4.3 Репликация
-Репкликация всей базв данных Postgres по схеме 1 Master - 2 Slave.
+Репкликация всеx баз данных по схеме 1 Master - 3 Slave.
+### 4.4 Описание
+Основная чаcть данных хранится на сервере Postgresql. В свою Postgres поддерживает шардирование таблиц USERS и PATROLS и репликацию данных на 3 реплики.\
+Redis используется для хранение текущих сессий. Она хранит данные о текущих сессиях в RAM для быстрого доступа к ним и также реплицируется.\
+Для хранения картинок используется S3 хранилище. Однако доступ картинкам доступен только через микросервис, которые сперва должен проверить, доступна ли картанка для пользователя, от которого пришел запрос. Также реплицируется.
+#### 4.4.1 Получение ленты
+Лента формируется при добавлении поста автором. При добавлении поста, всем подписчикам автора (поле subcribers) добавляется id нового поста в поле feed. Таким образом при запросе на получение ленты необходимо будет только выполнить запрос по получению постов по id из 10 последних элементов массива feed.
+#### 4.4.2 Получение просмотр страницы автора
+При просмотра страницы автора выгружается не только данные автора, но и его посты. Для ускорения этого запроса добавлен индекс 3, который за счет структуры b-tree уже будет иметь сортированный вид.
 ## Список литературы
 [^1]: [Domain Overview:
 patreon.com](https://www.semrush.com/analytics/overview/?q=patreon.com&searchType=domain)
