@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-05-21T22:31:08.897Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.50" etag="G2O3U2AElTg-0nIn5eco" version="21.3.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-05-21T22:33:52.017Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.50" etag="tDFRtmlMgyuzuFKarC4u" version="21.3.2" type="github">
   <diagram name="Страница 1" id="_mejZS6ALdZnEdtFayfQ">
     <mxGraphModel dx="1420" dy="521" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -13,7 +13,7 @@
         <mxCell id="8MpuRsiZ68WDf6vqScUq-20" value="Redis" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="535" y="160" width="105" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="8MpuRsiZ68WDf6vqScUq-21" value="SESSION" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="8MpuRsiZ68WDf6vqScUq-20">
+        <mxCell id="8MpuRsiZ68WDf6vqScUq-21" value="SESSIONS" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="8MpuRsiZ68WDf6vqScUq-20">
           <mxGeometry x="15" y="40" width="75" height="40" as="geometry" />
         </mxCell>
         <mxCell id="8MpuRsiZ68WDf6vqScUq-18" value="Postgresql" style="swimlane;whiteSpace=wrap;html=1;glass=0;fillStyle=auto;fixDash=0;backgroundOutline=0;comic=0;enumerate=0;moveCells=0;separatorColor=none;noLabel=0;" vertex="1" parent="1">
