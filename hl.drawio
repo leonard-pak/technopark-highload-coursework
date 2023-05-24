@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-05-24T10:46:17.791Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.50" etag="6bzWeSfOjJtw5pY8tKGh" version="21.3.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-05-24T10:52:38.079Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36 Edg/113.0.1774.50" etag="9gaEQZ6D7A_yvbtjaDyr" version="21.3.2" type="github">
   <diagram name="Страница 1" id="_mejZS6ALdZnEdtFayfQ">
-    <mxGraphModel dx="3471" dy="1273" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3905" dy="1433" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -112,20 +112,25 @@
         <mxCell id="H_DOfET_VM6jDZsi5RIZ-82" value="Master" style="outlineConnect=0;dashed=0;verticalLabelPosition=middle;verticalAlign=middle;align=left;html=1;shape=mxgraph.aws3.rds_db_instance_read_replica;fillColor=#2E73B8;gradientColor=none;labelPosition=right;" vertex="1" parent="H_DOfET_VM6jDZsi5RIZ-65">
           <mxGeometry x="80" y="121" width="32" height="45.72" as="geometry" />
         </mxCell>
-        <mxCell id="H_DOfET_VM6jDZsi5RIZ-90" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="H_DOfET_VM6jDZsi5RIZ-88" target="H_DOfET_VM6jDZsi5RIZ-89">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="H_DOfET_VM6jDZsi5RIZ-90" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;startArrow=classic;startFill=1;" edge="1" parent="1" source="H_DOfET_VM6jDZsi5RIZ-88" target="H_DOfET_VM6jDZsi5RIZ-89">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="120" y="1120" />
+              <mxPoint x="120" y="1120" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="H_DOfET_VM6jDZsi5RIZ-101" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.09;entryY=0.453;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="H_DOfET_VM6jDZsi5RIZ-88" target="H_DOfET_VM6jDZsi5RIZ-91">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="H_DOfET_VM6jDZsi5RIZ-88" value="Clients" style="points=[[0.35,0,0],[0.98,0.51,0],[1,0.71,0],[0.67,1,0],[0,0.795,0],[0,0.65,0]];verticalLabelPosition=bottom;sketch=0;html=1;verticalAlign=top;aspect=fixed;align=center;pointerEvents=1;shape=mxgraph.cisco19.user;fillColor=#005073;strokeColor=none;" vertex="1" parent="1">
-          <mxGeometry x="60" y="980" width="80" height="80" as="geometry" />
+        <mxCell id="H_DOfET_VM6jDZsi5RIZ-88" value="Clients" style="points=[[0.35,0,0],[0.98,0.51,0],[1,0.71,0],[0.67,1,0],[0,0.795,0],[0,0.65,0]];verticalLabelPosition=top;sketch=0;html=1;verticalAlign=bottom;aspect=fixed;align=center;pointerEvents=1;shape=mxgraph.cisco19.user;fillColor=#005073;strokeColor=none;labelPosition=center;" vertex="1" parent="1">
+          <mxGeometry x="80" y="970" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="H_DOfET_VM6jDZsi5RIZ-89" value="" style="image;sketch=0;aspect=fixed;html=1;points=[];align=center;fontSize=12;image=img/lib/mscae/DNS.svg;" vertex="1" parent="1">
-          <mxGeometry x="61" y="1141" width="79" height="79" as="geometry" />
+          <mxGeometry x="80" y="1120" width="79" height="79" as="geometry" />
         </mxCell>
         <mxCell id="H_DOfET_VM6jDZsi5RIZ-96" value="Web Server" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="220" y="960" width="100" height="220" as="geometry" />
+          <mxGeometry x="220" y="949" width="100" height="220" as="geometry" />
         </mxCell>
         <mxCell id="H_DOfET_VM6jDZsi5RIZ-100" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="H_DOfET_VM6jDZsi5RIZ-96" source="H_DOfET_VM6jDZsi5RIZ-98" target="H_DOfET_VM6jDZsi5RIZ-93">
           <mxGeometry relative="1" as="geometry">
